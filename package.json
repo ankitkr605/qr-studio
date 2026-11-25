@@ -1,0 +1,15 @@
+{
+  "name": "qr-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "QR Studio - Production-ready Dynamic QR Code Generator & Analytics SaaS Platform",
+  "scripts": {
+    "install:all": "npm install --prefix client && npm install --prefix server",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "build:client": "npm run build --prefix client",
+    "test:server": "npm test --prefix server",
+    "prisma:generate": "npm run prisma:generate --prefix server",
+    "prisma:migrate": "npm run prisma:migrate --prefix server"
+  }
+}

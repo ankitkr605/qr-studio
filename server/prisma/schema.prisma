@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  qrCodes QRCode[]
+}
+
+model QRCode {
+  id             String    @id @default(uuid())
+  codeId         String    @unique
+  userId         String
+  name           String
+  qrType         String
+  destinationUrl String
+  isDynamic      Boolean   @default(true)
+  isActive       Boolean   @default(true)
+  expiresAt      DateTime?
+  customization  Json      @default("{}")
+  scanCount      Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  user  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scans QRScan[]
+
+  @@index([userId, createdAt])
+  @@index([qrType])
+  @@index([isActive])
+}
+
+model QRScan {
+  id              String   @id @default(uuid())
+  qrCodeId        String
+  scannedAt       DateTime @default(now())
+  deviceCategory  String   @default("Other")
+  browserCategory String   @default("Other")
+  osCategory      String   @default("Other")
+  country         String   @default("Unknown")
+
+  qrCode QRCode @relation(fields: [qrCodeId], references: [id], onDelete: Cascade)
+
+  @@index([qrCodeId, scannedAt])
+}
