@@ -10,6 +10,7 @@
     "build:client": "npm run build --prefix client",
     "test:server": "npm test --prefix server",
     "prisma:generate": "npm run prisma:generate --prefix server",
-    "prisma:migrate": "npm run prisma:migrate --prefix server"
+    "prisma:migrate": "npm run prisma:migrate --prefix server",
+    "prisma:deploy": "npm run prisma:deploy --prefix server"
   }
 }
